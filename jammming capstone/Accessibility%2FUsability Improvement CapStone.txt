@@ -1,0 +1,42 @@
+﻿Accessibility/Usability Improvement
+May 15th 2018
+
+
+OBJECTIVE
+Improve the accessibility and usability of the app by making it usable via a keyboard. As of now, the app only works for users who use a mouse or trackpad. 
+BACKGROUND 
+It is important to make sure that all are able to use your application and that your application can be used with ease. The way the Jammming app was originally programmed, it is only usable by those who use a mouse or trackpad. This cuts off a portion of the population who cannot use a mouse such as those with fine motor control restrictions, disabled hands/arms, and large motor control issues. This also makes the app harder to navigate for those who refer to use a keyboard to navigate..
+TECHNICAL DESIGN
+The Jammming app has three main features: search bar, results list, and the playlist. These rely on mainly two elements: the search term and the track. You capture the search term in the search bar to use to give you a list of tracks. This list of tracks then lets you create a playlist, which is a save list of tracks. In order to make the app more accessible, you must make the search and ability to move tracks doable by a keyboard.
+To do so you must make the element tabbable. This means making these main elements navigable via the tab button. To do so you must add a tabIndex to the main elements like this:
+
+
+
+For the track component:
+  
+For the search component:
+  
+
+Now that you are able to get to the elements itself you must be able to run the functionality of that particular element. To do so you must add a trigger to the element that detects a key press by adding onKeyPress as seen in the pictures above.
+It is important that the function runs only on enter (eg when you are typing you do not want the search function to run after every letter you press). In order to achieve this you must check the keyCode that is sent with the onKeyPress event to make sure that it was the enter button that was pressed. To do so you must check and see if the UniCode that is return with the event is equal to 13.
+  
+
+Notice that both which and KeyCode are checked. This is because certain browsers will only return 0 if you just check keyCode.
+After it is verified that enter has been pressed then call the function appropriate to the element:
+
+
+
+
+
+
+Add Track:
+  
+
+Remove Track:
+  
+
+Search:
+  
+
+CAVEATS
+Some potential issues for this solution is the user will have to tab through all of the search results in order to save the playlist to spotify. So if you were to search for an artist such as Elton John you may have to tab several times in order to save; however, it is important that tracks are not skipped since the user may need access to a track later in the results. This fix does not make the app completely accessible since it does not make the app screen reader friendly, but it is a good starting place.
